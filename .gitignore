@@ -82,6 +82,10 @@ typings/
 .nuxt
 dist
 
+# Snowpack build output
+build
+web_modules
+
 # Gatsby files
 .cache/
 # Comment in the public line in if your project uses Gatsby and *not* Next.js

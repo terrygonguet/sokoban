@@ -1,0 +1,31 @@
+{
+	"name": "sokoban",
+	"version": "1.0.0",
+	"description": "A tiny Sokoban game to try some tech",
+	"main": "index.js",
+	"scripts": {
+		"pack": "snowpack",
+		"dev": "snowpack dev",
+		"build": "snowpack build",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/terrygonguet/sokoban.git"
+	},
+	"keywords": [],
+	"author": "Terry Gonguet",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/terrygonguet/sokoban/issues"
+	},
+	"homepage": "https://github.com/terrygonguet/sokoban#readme",
+	"devDependencies": {
+		"@snowpack/plugin-babel": "^1.4.0",
+		"snowpack": "^2.6.4"
+	},
+	"dependencies": {
+		"core-js": "^3.6.5",
+		"hybrids": "^4.2.1"
+	}
+}
