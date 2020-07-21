@@ -1,7 +1,5 @@
-import { define, html } from "hybrids"
+import Element from "./warehouse"
+import { define } from "hybrids"
+import "normalize.css"
 
-const Test = {
-	render: ({ test }) => html`<p>This is a ${test ?? "lol"}</p>`,
-}
-
-define("test-comp", Test)
+define("sk-warehouse", Element)
