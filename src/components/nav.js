@@ -32,7 +32,7 @@ function move(delta) {
 }
 
 export default {
-	levels: ["1", "2"],
+	levels: ["1", "2", "3"],
 	value: "1",
 	index: {
 		get: ({ value, levels }) => levels.indexOf(value),
@@ -63,10 +63,10 @@ export default {
 						background: #cbe2e3;
 						font-weight: bold;
 						text-align: center;
-						margin: 0 0.5rem;
 						cursor: pointer;
 					}
 					button {
+						margin: 0 0.5rem;
 						border-radius: 0.25rem;
 						background: #cbe2e3;
 						font-weight: bold;
@@ -84,5 +84,6 @@ export default {
 						${levels.map((l, i) => html`<option value="${l}" selected=${l == value}>${l}</option>`)}
 					</select>
 					<button disabled=${index == levels.length - 1} onclick="${move(1)}">&gt;</button>
+					<button onclick="${h => dispatch(h, "reset")}">Reset</button>
 				</nav>`,
 }

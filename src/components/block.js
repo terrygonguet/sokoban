@@ -41,6 +41,15 @@ export default {
 						top: 0;
 						left: 0;
 						transition: transform 0.1s ease-in-out;
+						animation: appear 0.1s linear;
+					}
+					@keyframes appear {
+						from {
+							opacity: 0;
+						}
+						to {
+							opacity: 1;
+						}
 					}
 				</style>
 				<div style="${style}"></div>`,

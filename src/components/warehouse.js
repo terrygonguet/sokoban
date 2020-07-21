@@ -103,7 +103,11 @@ export default {
 					}
 				</style>
 				<div id="container" style="--zoom: ${zoom}">
-					<sk-nav value="${level}" onchange="${html.set("level")}"></sk-nav>
+					<sk-nav
+						value="${level}"
+						onchange="${html.set("level")}"
+						onreset="${h => loadLevel(h, level)}"
+					></sk-nav>
 					<main>
 						${blocks.map(({ x, y, type, id }) =>
 							html`<sk-block x="${x}" y="${y}" type="${type}"></sk-block>`
