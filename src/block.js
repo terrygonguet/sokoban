@@ -4,7 +4,7 @@ import { html } from "hybrids"
  * @typedef {Object} Block
  * @property {number} x
  * @property {number} y
- * @property {"box" | "objective" | "wall" | "character"} type
+ * @property {"box" | "objective" | "wall" | "character" | "floor"} type
  */
 
 /**
@@ -16,6 +16,7 @@ const zIndexes = {
 	box: 10,
 	wall: 5,
 	objective: 1,
+	floor: 0,
 }
 
 export default {
@@ -65,7 +66,7 @@ export function getBlocksAt(blocks, x, y) {
  * @param {Block} block
  */
 export function isTraversable(block) {
-	return block.type == "objective"
+	return ["objective", "floor"].includes(block.type)
 }
 
 /**

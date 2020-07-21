@@ -101,12 +101,12 @@ async function loadLevel(host, level) {
 	host.width = width
 	host.height = height
 	host.blocks = blocks
-		.map((n, i) =>
+		.map(([x, y, n]) =>
 			n
 				? {
 						type: map[n],
-						x: i % width,
-						y: Math.floor(i / width),
+						x,
+						y,
 						id: id(),
 				  }
 				: false,
