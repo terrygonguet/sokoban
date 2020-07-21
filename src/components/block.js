@@ -45,33 +45,3 @@ export default {
 				</style>
 				<div style="${style}"></div>`,
 }
-
-/**
- * @param {Block[]} blocks
- */
-export function getCharacter(blocks) {
-	return blocks.find((b) => b.type == "character")
-}
-
-/**
- * @param {Block[]} blocks
- * @param {number} x
- * @param {number} y
- */
-export function getBlocksAt(blocks, x, y) {
-	return blocks.filter((b) => b.x == x && b.y == y)
-}
-
-/**
- * @param {Block} block
- */
-export function isTraversable(block) {
-	return ["objective", "floor"].includes(block.type)
-}
-
-/**
- * @param {Block} block
- */
-export function isBox(block) {
-	return block.type == "box"
-}

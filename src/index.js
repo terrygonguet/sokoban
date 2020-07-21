@@ -1,4 +1,4 @@
-import Element from "./warehouse"
+import Element from "./components/warehouse"
 import { define } from "hybrids"
 import "normalize.css"
 
