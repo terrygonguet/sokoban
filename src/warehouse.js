@@ -1,6 +1,6 @@
 import { html } from "hybrids"
 import Block, { getCharacter, getBlocksAt, isTraversable, isBox } from "./block"
-import { id, resetId } from "./tools"
+import { id, resetId, clamp } from "./tools"
 
 /**
  * @typedef {Object} Warehouse
@@ -9,6 +9,7 @@ import { id, resetId } from "./tools"
  * @property {number} height
  * @property {boolean} canMove
  * @property {string} level
+ * @property {number} zoom
  */
 
 /**
@@ -21,10 +22,9 @@ import { id, resetId } from "./tools"
 
 /**
  * @param {WarehouseElement} host
- * @param {Function} invalidate
  * @param {KeyboardEvent} e
  */
-function onKeydown(host, invalidate, e) {
+function onKeydown(host, e) {
 	const { width, height, blocks, canMove } = host
 	if (!canMove) return
 	const player = getCharacter(blocks)
@@ -76,6 +76,14 @@ function onKeydown(host, invalidate, e) {
 
 /**
  * @param {WarehouseElement} host
+ * @param {WheelEvent} e
+ */
+function onScroll(host, e) {
+	host.zoom = clamp(host.zoom + Math.sign(e.deltaY) * 0.1, 0.5, 2.5)
+}
+
+/**
+ * @param {WarehouseElement} host
  * @param {number} level
  */
 async function loadLevel(host, level) {
@@ -110,27 +118,29 @@ export default {
 	canMove: true,
 	level: {
 		observe: loadLevel,
-	},
-	width: 1,
-	height: 1,
-	blocks: [],
-	character: {
 		connect:
 			/**
 			 * @param {WarehouseElement} host
-			 * @param {string} key
-			 * @param {Function} invalidate
 			 */
 			function (host, key, invalidate) {
 				host.level = "1"
-				const cb = onKeydown.bind(undefined, host, invalidate)
-				document.addEventListener("keydown", cb)
-				return () => document.removeEventListener("keydown", cb)
+				const cb_kd = onKeydown.bind(undefined, host)
+				const cb_scroll = onScroll.bind(undefined, host)
+				document.addEventListener("keydown", cb_kd)
+				document.addEventListener("wheel", cb_scroll)
+				return () => {
+					document.removeEventListener("keydown", cb_kd)
+					document.removeEventListener("wheel", cb_scroll)
+				}
 			},
 	},
+	width: 1,
+	height: 1,
+	zoom: 1.5,
+	blocks: [],
 	render:
 		/** @param {WarehouseElement} host */
-		({ blocks, width, height }) =>
+		({ blocks, width, height, zoom }) =>
 			html`<style>
 					#container {
 						width: 100vw;
@@ -181,9 +191,10 @@ export default {
 						);
 						background: var(--warehouse-bg, #2a2a2a);
 						position: relative;
+						transform: scale(var(--zoom, 1));
 					}
 				</style>
-				<div id="container">
+				<div id="container" style="--zoom: ${zoom}">
 					<main>
 						${blocks.map(({ x, y, type, id }) =>
 							html`<sk-block
