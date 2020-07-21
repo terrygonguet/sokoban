@@ -20,6 +20,15 @@ const zIndexes = {
 	floor: 0,
 }
 
+const bgPositions = {
+	character: [0, -128],
+	box: [0, -64],
+	"box-ok": [-64, 0],
+	wall: [-64, -64],
+	objective: [0, 0],
+	floor: [-64, -128],
+}
+
 export default {
 	x: 0,
 	y: 0,
@@ -27,7 +36,7 @@ export default {
 	style:
 		/** @param {BlockElement} host */
 		({ type, x, y }) => ({
-			backgroundImage: `url("${type}.png")`,
+			backgroundPosition: bgPositions[type].map(n => `${n}px`).join(" "),
 			transform: `translate(calc(${x} * var(--sprite-dimension)), calc(${y} * var(--sprite-dimension)))`,
 			zIndex: zIndexes[type],
 		}),
@@ -36,6 +45,7 @@ export default {
 		({ style }) =>
 			html`<style>
 					div {
+						background-image: url("spritesheet.png"),
 						width: var(--sprite-dimension);
 						height: var(--sprite-dimension);
 						position: absolute;

@@ -30,9 +30,6 @@ export function onKeydown(host, e) {
 		case "arrowright":
 			deltaX = 1
 			break
-		case " ":
-			host.level = "2"
-			return
 		case "r":
 			if (canMove) reset(host)
 			break
@@ -62,8 +59,10 @@ export function onKeydown(host, e) {
 		host.canMove = false
 		setTimeout(() => {
 			const i = levels.indexOf(level)
-			if (i == levels.length - 1) alert("You win!")
-			else host.level = levels[i + 1]
+			if (i == levels.length - 1) {
+				host.popupMessage = "You win!"
+				host.showPopup = true
+			} else host.level = levels[i + 1]
 		}, 500)
 	}
 	if (e.key.startsWith("Arrow")) {

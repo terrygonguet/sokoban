@@ -118,6 +118,8 @@ export default {
 						justify-content: center;
 						align-items: center;
 						margin: 0;
+						font-size: large;
+						font-weight: bold;
 					}
 				</style>
 				<div id="container" style="--zoom: ${zoom}">

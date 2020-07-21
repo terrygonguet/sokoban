@@ -38,8 +38,8 @@ export default {
 						background: white;
 						padding: 1rem;
 						border-radius: 0.5rem;
-						width: 40%;
-						min-height: 20%;
+						width: 25%;
+						min-height: 15%;
 						height: 0;
 					}
 				</style>

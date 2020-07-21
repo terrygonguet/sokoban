@@ -51,6 +51,8 @@ export default {
 						background-image: url("wall.png");
 						display: flex;
 						justify-content: center;
+						z-index: 100;
+						position: relative;
 					}
 					select {
 						padding: 0.5rem;
