@@ -1,4 +1,5 @@
 import { id, resetId } from "./tools"
+import { dispatch } from "hybrids"
 
 /** @typedef {import("./components/warehouse").WarehouseElement} WarehouseElement */
 
@@ -104,6 +105,7 @@ export async function loadLevel(host, level) {
 				: false,
 		)
 		.filter(Boolean)
+	dispatch(host, "levelloaded", { detail: level })
 }
 
 /**

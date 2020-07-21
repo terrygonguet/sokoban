@@ -79,11 +79,11 @@ export default {
 					}
 				</style>
 				<nav>
-					<button disabled=${index == 0} onclick="${move(-1)}">&lt;</button>
+					<button disabled=${index == 0 || index == -1} onclick="${move(-1)}">&lt;</button>
 					<select onchange="${onChange}">
 						${levels.map((l, i) => html`<option value="${l}" selected=${l == value}>${l}</option>`)}
 					</select>
-					<button disabled=${index == levels.length - 1} onclick="${move(1)}">&gt;</button>
-					<button onclick="${h => dispatch(h, "reset")}">Reset</button>
+					<button disabled=${index == levels.length - 1 || index == -1} onclick="${move(1)}">&gt;</button>
+					<button onclick="${h => dispatch(h, "reset")}" disabled=${index == -1}>Reset</button>
 				</nav>`,
 }

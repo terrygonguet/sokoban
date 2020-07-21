@@ -1,6 +1,7 @@
 import { html } from "hybrids"
 import Block from "./block"
 import Nav from "./nav"
+import Popup from "./popup"
 import { onKeydown, loadLevel, reset } from "../game"
 import { clamp } from "../tools"
 
@@ -13,6 +14,8 @@ import { clamp } from "../tools"
  * @property {string} level
  * @property {number} zoom
  * @property {string[]} levels
+ * @property {string} popupMessage
+ * @property {boolean} showPopup
  */
 
 /**
@@ -38,15 +41,18 @@ export default {
 			/**
 			 * @param {WarehouseElement} host
 			 */
-			function addListeners(host, key, invalidate) {
-				host.level = "1"
+			function addListeners(host) {
+				host.level = host.levels[0]
+				const onlvlloaded = () => (host.showPopup = false)
 				const cb_kd = onKeydown.bind(undefined, host)
 				const cb_scroll = onScroll.bind(undefined, host)
 				document.addEventListener("keydown", cb_kd)
 				document.addEventListener("wheel", cb_scroll)
+				host.addEventListener("levelloaded", onlvlloaded)
 				return () => {
 					document.removeEventListener("keydown", cb_kd)
 					document.removeEventListener("wheel", cb_scroll)
+					host.removeEventListener("levelloaded", onlvlloaded)
 				}
 			},
 	},
@@ -56,9 +62,11 @@ export default {
 	zoom: 1,
 	blocks: [],
 	levels: ["1", "2", "3"],
+	popupMessage: "Loading...",
+	showPopup: true,
 	render:
 		/** @param {WarehouseElement} host */
-		({ blocks, width, height, zoom, level, levels }) =>
+		({ blocks, width, height, zoom, level, levels, popupMessage, showPopup }) =>
 			html`<style>
 					#container {
 						width: 100vw;
@@ -67,7 +75,6 @@ export default {
 						justify-content: center;
 						align-items: center;
 						flex-direction: column;
-						color: var(--color-text);
 						overflow: hidden;
 						background: linear-gradient(45deg, #444444 45px, transparent 45px) 64px 64px,
 							linear-gradient(
@@ -95,6 +102,7 @@ export default {
 					}
 
 					main {
+						--sprite-dimension: 64px;
 						margin: auto;
 						display: grid;
 						grid-template-columns: repeat(${width}, var(--sprite-dimension));
@@ -102,6 +110,14 @@ export default {
 						background: var(--warehouse-bg, transparent);
 						position: relative;
 						transform: scale(var(--zoom, 1));
+					}
+
+					.popup {
+						height: 100%;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						margin: 0;
 					}
 				</style>
 				<div id="container" style="--zoom: ${zoom}">
@@ -111,6 +127,9 @@ export default {
 						onchange="${html.set("level")}"
 						onreset="${reset}"
 					></sk-nav>
+					<sk-popup hidden=${!showPopup}>
+						<p class="popup">${popupMessage}</p>
+					</sk-popup>
 					<main>
 						${blocks.map(({ x, y, type, id }) =>
 							html`<sk-block x="${x}" y="${y}" type="${type}"></sk-block>`
@@ -118,5 +137,5 @@ export default {
 								.key(id),
 						)}
 					</main>
-				</div>`.define({ skNav: Nav }),
+				</div>`.define({ skNav: Nav, skPopup: Popup }),
 }
