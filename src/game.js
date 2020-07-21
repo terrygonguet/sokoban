@@ -1,4 +1,4 @@
-import { clamp, id, resetId } from "./tools"
+import { id, resetId } from "./tools"
 
 /** @typedef {import("./components/warehouse").WarehouseElement} WarehouseElement */
 
@@ -56,14 +56,6 @@ export function onKeydown(host, e) {
 		host.canMove = false
 		setTimeout(() => (host.canMove = true), 110)
 	}
-}
-
-/**
- * @param {WarehouseElement} host
- * @param {WheelEvent} e
- */
-export function onScroll(host, e) {
-	host.zoom = clamp(host.zoom + Math.sign(e.deltaY) * 0.1, 0.5, 2)
 }
 
 /**

@@ -1,6 +1,8 @@
 import { html } from "hybrids"
 import Block from "./block"
-import { onKeydown, onScroll, loadLevel } from "../game"
+import Nav from "./nav"
+import { onKeydown, loadLevel } from "../game"
+import { clamp } from "../tools"
 
 /**
  * @typedef {Object} Warehouse
@@ -19,6 +21,14 @@ import { onKeydown, onScroll, loadLevel } from "../game"
 /**
  * @typedef {import("./block").Block} Block
  */
+
+/**
+ * @param {WarehouseElement} host
+ * @param {WheelEvent} e
+ */
+function onScroll(host, e) {
+	host.zoom = clamp(host.zoom - Math.sign(e.deltaY) * 0.1, 0.5, 2)
+}
 
 export default {
 	level: {
@@ -46,7 +56,7 @@ export default {
 	blocks: [],
 	render:
 		/** @param {WarehouseElement} host */
-		({ blocks, width, height, zoom }) =>
+		({ blocks, width, height, zoom, level }) =>
 			html`<style>
 					#container {
 						width: 100vw;
@@ -54,15 +64,10 @@ export default {
 						display: flex;
 						justify-content: center;
 						align-items: center;
+						flex-direction: column;
 						color: var(--color-text);
-						image-rendering: pixelated;
 						overflow: hidden;
-						background: linear-gradient(
-									45deg,
-									#444444 45px,
-									transparent 45px
-								)
-								64px 64px,
+						background: linear-gradient(45deg, #444444 45px, transparent 45px) 64px 64px,
 							linear-gradient(
 								45deg,
 								#444444 45px,
@@ -88,31 +93,23 @@ export default {
 					}
 
 					main {
+						margin: auto;
 						display: grid;
-						grid-template-columns: repeat(
-							${width},
-							var(--sprite-dimension)
-						);
-						grid-template-rows: repeat(
-							${height},
-							var(--sprite-dimension)
-						);
+						grid-template-columns: repeat(${width}, var(--sprite-dimension));
+						grid-template-rows: repeat(${height}, var(--sprite-dimension));
 						background: var(--warehouse-bg, transparent);
 						position: relative;
 						transform: scale(var(--zoom, 1));
 					}
 				</style>
 				<div id="container" style="--zoom: ${zoom}">
+					<sk-nav value="${level}" onchange="${html.set("level")}"></sk-nav>
 					<main>
 						${blocks.map(({ x, y, type, id }) =>
-							html`<sk-block
-								x="${x}"
-								y="${y}"
-								type="${type}"
-							></sk-block>`
+							html`<sk-block x="${x}" y="${y}" type="${type}"></sk-block>`
 								.define({ skBlock: Block })
 								.key(id),
 						)}
 					</main>
-				</div>`,
+				</div>`.define({ skNav: Nav }),
 }
