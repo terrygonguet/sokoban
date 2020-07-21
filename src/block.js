@@ -25,7 +25,7 @@ export default {
 	style:
 		/** @param {BlockElement} host */
 		({ type, x, y }) => ({
-			backgroundImage: `url("${type}.gif")`,
+			backgroundImage: `url("${type}.png")`,
 			transform: `translate(calc(${x} * var(--sprite-dimension)), calc(${y} * var(--sprite-dimension)))`,
 			zIndex: zIndexes[type],
 		}),

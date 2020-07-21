@@ -79,7 +79,7 @@ function onKeydown(host, e) {
  * @param {WheelEvent} e
  */
 function onScroll(host, e) {
-	host.zoom = clamp(host.zoom + Math.sign(e.deltaY) * 0.1, 0.5, 2.5)
+	host.zoom = clamp(host.zoom + Math.sign(e.deltaY) * 0.1, 0.5, 2)
 }
 
 /**
@@ -136,7 +136,7 @@ export default {
 	},
 	width: 1,
 	height: 1,
-	zoom: 1.5,
+	zoom: 1,
 	blocks: [],
 	render:
 		/** @param {WarehouseElement} host */
@@ -149,6 +149,8 @@ export default {
 						justify-content: center;
 						align-items: center;
 						color: var(--color-text);
+						image-rendering: pixelated;
+						overflow: hidden;
 						background: linear-gradient(
 									45deg,
 									#444444 45px,
@@ -189,7 +191,7 @@ export default {
 							${height},
 							var(--sprite-dimension)
 						);
-						background: var(--warehouse-bg, #2a2a2a);
+						background: var(--warehouse-bg, transparent);
 						position: relative;
 						transform: scale(var(--zoom, 1));
 					}
