@@ -9,37 +9,36 @@ import { id, resetId } from "./tools"
  * @param {KeyboardEvent} e
  */
 export function onKeydown(host, e) {
-	const { width, height, blocks, canMove } = host
+	const { width, height, blocks, canMove, levels, level } = host
 	if (!canMove) return
 	const player = getCharacter(blocks)
 	if (!player) return
 
 	let deltaX = 0,
 		deltaY = 0
-	switch (e.key) {
-		case "ArrowUp":
+	switch (e.key.toLowerCase()) {
+		case "arrowup":
 			deltaY = -1
 			break
-		case "ArrowDown":
+		case "arrowdown":
 			deltaY = 1
 			break
-		case "ArrowLeft":
+		case "arrowleft":
 			deltaX = -1
 			break
-		case "ArrowRight":
+		case "arrowright":
 			deltaX = 1
 			break
 		case " ":
 			host.level = "2"
 			return
+		case "r":
+			if (canMove) reset(host)
+			break
 	}
 
 	const oneOver = getBlocksAt(blocks, player.x + deltaX, player.y + deltaY)
-	const twoOver = getBlocksAt(
-		blocks,
-		player.x + deltaX * 2,
-		player.y + deltaY * 2,
-	)
+	const twoOver = getBlocksAt(blocks, player.x + deltaX * 2, player.y + deltaY * 2)
 	if (oneOver.every(isTraversable)) {
 		player.x += deltaX
 		player.y += deltaY
@@ -51,8 +50,25 @@ export function onKeydown(host, e) {
 		box.y += deltaY
 	}
 
+	// validate boxes
+	const boxes = blocks.filter(isBox)
+	boxes.forEach(b => {
+		const blocksOnSamePlace = getBlocksAt(blocks, b.x, b.y)
+		if (blocksOnSamePlace.some(isObjective)) b.type = "box-ok"
+		else b.type = "box"
+	})
+	if (boxes.every(b => b.type == "box-ok")) {
+		host.canMove = false
+		setTimeout(() => {
+			const i = levels.indexOf(level)
+			if (i == levels.length - 1) alert("You win!")
+			else host.level = levels[i + 1]
+		}, 500)
+	}
 	if (e.key.startsWith("Arrow")) {
-		host.blocks = blocks.map((a) => a)
+		// trigger render
+		host.blocks = blocks.map(a => a)
+		// prevent input too fast for animation
 		host.canMove = false
 		setTimeout(() => (host.canMove = true), 110)
 	}
@@ -91,10 +107,17 @@ export async function loadLevel(host, level) {
 }
 
 /**
+ * @param {WarehouseElement} host
+ */
+export function reset(host) {
+	loadLevel(host, host.level)
+}
+
+/**
  * @param {Block[]} blocks
  */
 export function getCharacter(blocks) {
-	return blocks.find((b) => b.type == "character")
+	return blocks.find(b => b.type == "character")
 }
 
 /**
@@ -103,7 +126,7 @@ export function getCharacter(blocks) {
  * @param {number} y
  */
 export function getBlocksAt(blocks, x, y) {
-	return blocks.filter((b) => b.x == x && b.y == y)
+	return blocks.filter(b => b.x == x && b.y == y)
 }
 
 /**
@@ -117,5 +140,12 @@ export function isTraversable(block) {
  * @param {Block} block
  */
 export function isBox(block) {
-	return block.type == "box"
+	return ["box", "box-ok"].includes(block.type)
+}
+
+/**
+ * @param {Block} block
+ */
+export function isObjective(block) {
+	return block.type == "objective"
 }

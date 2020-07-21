@@ -4,7 +4,7 @@ import { html } from "hybrids"
  * @typedef {Object} Block
  * @property {number} x
  * @property {number} y
- * @property {"box" | "objective" | "wall" | "character" | "floor"} type
+ * @property {"box" | "box-ok" | "objective" | "wall" | "character" | "floor"} type
  */
 
 /**
@@ -14,6 +14,7 @@ import { html } from "hybrids"
 const zIndexes = {
 	character: 99,
 	box: 10,
+	"box-ok": 10,
 	wall: 5,
 	objective: 1,
 	floor: 0,

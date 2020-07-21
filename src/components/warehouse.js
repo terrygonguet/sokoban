@@ -1,7 +1,7 @@
 import { html } from "hybrids"
 import Block from "./block"
 import Nav from "./nav"
-import { onKeydown, loadLevel } from "../game"
+import { onKeydown, loadLevel, reset } from "../game"
 import { clamp } from "../tools"
 
 /**
@@ -12,6 +12,7 @@ import { clamp } from "../tools"
  * @property {boolean} canMove
  * @property {string} level
  * @property {number} zoom
+ * @property {string[]} levels
  */
 
 /**
@@ -54,9 +55,10 @@ export default {
 	height: 1,
 	zoom: 1,
 	blocks: [],
+	levels: ["1", "2", "3"],
 	render:
 		/** @param {WarehouseElement} host */
-		({ blocks, width, height, zoom, level }) =>
+		({ blocks, width, height, zoom, level, levels }) =>
 			html`<style>
 					#container {
 						width: 100vw;
@@ -105,8 +107,9 @@ export default {
 				<div id="container" style="--zoom: ${zoom}">
 					<sk-nav
 						value="${level}"
+						levels="${levels}"
 						onchange="${html.set("level")}"
-						onreset="${h => loadLevel(h, level)}"
+						onreset="${reset}"
 					></sk-nav>
 					<main>
 						${blocks.map(({ x, y, type, id }) =>

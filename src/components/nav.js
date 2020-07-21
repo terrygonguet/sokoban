@@ -32,8 +32,8 @@ function move(delta) {
 }
 
 export default {
-	levels: ["1", "2", "3"],
-	value: "1",
+	levels: [],
+	value: "",
 	index: {
 		get: ({ value, levels }) => levels.indexOf(value),
 		set: (host, value) => (host.value = host.levels[value]),
