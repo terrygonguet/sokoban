@@ -19,7 +19,7 @@
 	"bugs": {
 		"url": "https://github.com/terrygonguet/sokoban/issues"
 	},
-	"homepage": "https://github.com/terrygonguet/sokoban#readme",
+	"homepage": ".",
 	"devDependencies": {
 		"@snowpack/plugin-babel": "^1.4.0",
 		"snowpack": "^2.6.4"
