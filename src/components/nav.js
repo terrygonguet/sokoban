@@ -21,21 +21,14 @@ function onChange(host, e) {
 }
 
 /**
- * @param {NavElement} host
- * @param {Event} e
+ * @param {number} delta
+ * @returns {(host: NavElement) => void}
  */
-function next(host, e) {
-	host.index++
-	dispatch(host, "change")
-}
-
-/**
- * @param {NavElement} host
- * @param {Event} e
- */
-function prev(host, e) {
-	host.index--
-	dispatch(host, "change")
+function move(delta) {
+	return host => {
+		host.index += delta
+		dispatch(host, "change")
+	}
 }
 
 export default {
@@ -86,10 +79,10 @@ export default {
 					}
 				</style>
 				<nav>
-					<button disabled=${index == 0} onclick="${prev}">&lt;</button>
+					<button disabled=${index == 0} onclick="${move(-1)}">&lt;</button>
 					<select onchange="${onChange}">
 						${levels.map((l, i) => html`<option value="${l}" selected=${l == value}>${l}</option>`)}
 					</select>
-					<button disabled=${index == levels.length - 1} onclick="${next}">&gt;</button>
+					<button disabled=${index == levels.length - 1} onclick="${move(1)}">&gt;</button>
 				</nav>`,
 }
