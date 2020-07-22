@@ -51,7 +51,7 @@ export default {
 						pointer-events: none;
 					}
 					div {
-						background-image: url("spritesheet.png");
+						background-image: url("/spritesheet.png");
 						width: var(--sprite-dimension);
 						height: var(--sprite-dimension);
 						position: absolute;

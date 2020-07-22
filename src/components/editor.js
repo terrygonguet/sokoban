@@ -219,7 +219,7 @@ export default {
 										class=${{ selected: l == selectedLayer, blockpicker: true }}
 										onclick=${h => (h.selectedLayer = l)}
 									>
-										<img src="${l}.png" />
+										<img src="/${l}.png" />
 									</button>`,
 							)}
 						</div>
