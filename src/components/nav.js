@@ -46,7 +46,7 @@ export default {
 						width: 100%;
 					}
 					nav {
-						padding: 1rem;
+						padding: 1rem 0;
 						width: 100%;
 						background-image: url("wall.png");
 						display: flex;
@@ -67,17 +67,25 @@ export default {
 						text-align: center;
 						cursor: pointer;
 					}
-					button {
+					button,
+					a {
 						margin: 0 0.5rem;
+						padding: 0.5rem;
 						border-radius: 0.25rem;
 						background: #cbe2e3;
-						font-weight: bold;
 						border: none;
 						cursor: pointer;
+						text-decoration: none;
+						font-size: 0.8rem;
+						color: black;
 					}
 					button:disabled {
 						background: #a6b2b3;
 						cursor: not-allowed;
+					}
+					a {
+						position: absolute;
+						right: 3rem;
 					}
 				</style>
 				<nav>
@@ -86,6 +94,7 @@ export default {
 						${levels.map((l, i) => html`<option value="${l}" selected=${l == value}>${l}</option>`)}
 					</select>
 					<button disabled=${index == levels.length - 1 || index == -1} onclick="${move(1)}">&gt;</button>
-					<button onclick="${h => dispatch(h, "reset")}" disabled=${index == -1}>Reset</button>
+					<button onclick="${h => dispatch(h, "reset")}" disabled=${index == -1}>Reset (R)</button>
+					<a href="editor">Editor</a>
 				</nav>`,
 }

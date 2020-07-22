@@ -17,6 +17,6 @@ module.exports = {
 		"mount:src": "mount src --to /",
 		"mount:web_modules": "mount web_modules",
 	},
-	plugins: ["@snowpack/plugin-babel"],
+	// plugins: [["@snowpack/plugin-webpack"]],
 	install: ["hybrids"],
 }

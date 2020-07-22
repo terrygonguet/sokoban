@@ -2,7 +2,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>Tiny Sokoban</title>
+		<title>Tiny Sokoban - Editor</title>
 		<meta name="description" content="A tiny Sokoban game to try some tech">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="shortcut icon" href="box.png" type="image/png">
@@ -17,12 +17,12 @@
 		</style>
 	</head>
 	<body>
-		<sk-warehouse></sk-warehouse>
+		<sk-editor></sk-editor>
 		<script type="module">
-			import Element from "./components/warehouse"
+			import Element from "./components/editor"
 			import { define } from "hybrids"
 
-			define("sk-warehouse", Element)
+			define("sk-editor", Element)
 		</script>
 	</body>
 </html>

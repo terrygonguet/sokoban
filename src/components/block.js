@@ -44,8 +44,14 @@ export default {
 		/** @param {BlockElement} host */
 		({ style }) =>
 			html`<style>
+					:host {
+						position: absolute;
+						top: 0;
+						left: 0;
+						pointer-events: none;
+					}
 					div {
-						background-image: url("spritesheet.png"),
+						background-image: url("spritesheet.png");
 						width: var(--sprite-dimension);
 						height: var(--sprite-dimension);
 						position: absolute;

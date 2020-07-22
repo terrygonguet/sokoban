@@ -92,18 +92,19 @@ export async function loadLevel(host, level) {
 	resetId()
 	host.width = width
 	host.height = height
-	host.blocks = blocks
-		.map(([x, y, n]) =>
-			n
-				? {
-						type: map[n],
-						x,
-						y,
-						id: id(),
-				  }
-				: false,
-		)
-		.filter(Boolean)
+	host.blocks = blocks.map(([x, y, n]) => ({
+		type: map[n],
+		x,
+		y,
+		id: id(),
+	}))
+	// validate boxes
+	const boxes = host.blocks.filter(isBox)
+	boxes.forEach(b => {
+		const blocksOnSamePlace = getBlocksAt(host.blocks, b.x, b.y)
+		if (blocksOnSamePlace.some(isObjective)) b.type = "box-ok"
+		else b.type = "box"
+	})
 	dispatch(host, "levelloaded", { detail: level })
 }
 

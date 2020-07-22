@@ -61,7 +61,7 @@ export default {
 	height: 1,
 	zoom: 1,
 	blocks: [],
-	levels: ["1", "2", "3"],
+	levels: ["1", "2", "3", "4", "5", "6"],
 	popupMessage: "Loading...",
 	showPopup: true,
 	render:
