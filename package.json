@@ -21,12 +21,10 @@
 	},
 	"homepage": ".",
 	"devDependencies": {
-		"@snowpack/plugin-babel": "^1.4.0",
+		"@snowpack/plugin-webpack": "^1.6.0-alpha.0",
 		"snowpack": "^2.6.4"
 	},
 	"dependencies": {
-		"core-js": "^3.6.5",
-		"hybrids": "^4.2.1",
-		"normalize.css": "^8.0.1"
+		"hybrids": "^4.2.1"
 	}
 }
